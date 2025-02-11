@@ -1,0 +1,70 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Nuestros Modelos</h2>
+
+    <!-- Check for errors -->
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Bookshelf Models -->
+    <div class="row">
+        {% for model in models %}
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{{ model.image_url }}" class="card-img-top" alt="{{ model.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ model.name }}</h5>
+                    <p class="card-text">{{ model.description }}</p>
+                    <button class="btn btn-success select-btn" data-model-id="{{ model.id }}" data-model-name="{{ model.name }}" onclick="selectModel()">
+                        Customizar
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Hidden Order Form -->
+    <div id="order-form" class="mt-5 p-4 bg-light border rounded d-none">
+        <h3>Place Your Order for <span id="selected-model-name"></span></h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="model_id" id="model-id">
+            <div class="mb-3">
+                <label class="form-label">Ancho en cm</label>
+                <input type="number" class="form-control" name="ancho" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Alto en cm</label>
+                <input type="number" class="form-control" name="alto" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Profundidad en cm</label>
+                <input type="number" class="form-control" name="profundidad" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.select-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('selected-model-name').textContent = this.getAttribute('data-model-name');
+            document.getElementById('model-id').value = this.getAttribute('data-model-id');
+            document.getElementById('order-form').classList.remove('d-none');
+        });
+    });
+
+    function selectModel() {
+        // Scroll smoothly to the form
+        // Small delay before scrolling to ensure UI updates first
+        setTimeout(() => {
+            document.getElementById("order-form").scrollIntoView({ behavior: "smooth" });
+        }, 100); // Adjust delay if needed
+    }
+</script>
+{% endblock %}
