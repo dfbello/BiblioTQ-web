@@ -1,0 +1,9 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4">Tu cotización ha sido enviada</h1>
+    <p class="lead">Recibirás en tu email los detalles de la cotización</p>
+    <a href="{% url 'shop' %}" class="btn btn-primary btn-lg">Volver a la tienda</a>
+</div>
+{% endblock %}

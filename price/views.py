@@ -57,7 +57,9 @@ def shop(request):
             profundidad=profundidad,
         )
         nueva_cotizacion.save()
-        return redirect('shop')
+        return redirect('success')
 
     return render(request, 'shop.html', {'models': BOOKSHELF_MODELS})
 
+def success(request):
+    return render(request, 'success.html')

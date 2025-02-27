@@ -13,12 +13,12 @@
     <div class="row">
         {% for model in models %}
         <div class="col-md-4">
-            <div class="card shadow-sm">
-                <img src="{{ model.image_url }}" class="card-img-top" alt="{{ model.name }}">
+            <div class="card border-primary mb-5">
+                <img src="{{ model.image_url }}" class="card-img-top" alt="{{ model.name }}">   
                 <div class="card-body">
                     <h5 class="card-title">{{ model.name }}</h5>
                     <p class="card-text">{{ model.description }}</p>
-                    <button class="btn btn-success select-btn" data-model-id="{{ model.id }}" data-model-name="{{ model.name }}" onclick="selectModel()">
+                    <button class="btn btn-primary select-btn" data-model-id="{{ model.id }}" data-model-name="{{ model.name }}" onclick="selectModel()">
                         Customizar
                     </button>
                 </div>
@@ -28,8 +28,8 @@
     </div>
 
     <!-- Hidden Order Form -->
-    <div id="order-form" class="mt-5 p-4 bg-light border rounded d-none">
-        <h3>Place Your Order for <span id="selected-model-name"></span></h3>
+    <div id="order-form" class="mt-5 p-4 bg-light border border-primary rounded d-none mb-5">
+        <h3>Define las dimensiones para tu <span id="selected-model-name"></span></h3>
         <form method="POST">
             {% csrf_token %}
             <input type="hidden" name="model_id" id="model-id">
@@ -61,6 +61,7 @@
 
     function selectModel() {
         // Scroll smoothly to the form
+
         // Small delay before scrolling to ensure UI updates first
         setTimeout(() => {
             document.getElementById("order-form").scrollIntoView({ behavior: "smooth" });
