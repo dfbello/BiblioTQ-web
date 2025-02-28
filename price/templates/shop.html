@@ -45,6 +45,7 @@
                 <label class="form-label">Profundidad en cm</label>
                 <input type="number" class="form-control" name="profundidad" required>
             </div>
+            <div class="mb-3" id="extra-fields"></div>
             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
         </form>
     </div>
@@ -53,9 +54,49 @@
 <script>
     document.querySelectorAll('.select-btn').forEach(button => {
         button.addEventListener('click', function() {
-            document.getElementById('selected-model-name').textContent = this.getAttribute('data-model-name');
+            const modelName = this.getAttribute('data-model-name');
+            document.getElementById('selected-model-name').textContent = modelName;
             document.getElementById('model-id').value = this.getAttribute('data-model-id');
             document.getElementById('order-form').classList.remove('d-none');
+
+            const extraFields = document.getElementById('extra-fields');
+            extraFields.innerHTML = '';
+
+            if (modelName === 'Cotizacion1') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Espesor en cm</label>
+                        <input type="number" class="form-control" name="espesor" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de cajones a la derecha</label>
+                        <input type="number" class="form-control" name="n_cajones_der" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de cajones a la izquierda</label>
+                        <input type="number" class="form-control" name="n_cajones_izq" required>
+                    </div>
+                `;
+            } else if (modelName === 'Cotizacion2' || modelName === 'Cotizacion3') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Altura 1 en cm</label>
+                        <input type="number" class="form-control" name="altura_1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Altura 2 en cm</label>
+                        <input type="number" class="form-control" name="altura_2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de repisas</label>
+                        <input type="number" class="form-control" name="N_repisas_p" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">¿Incluir cajón?</label>
+                        <input type="checkbox" class="form-check-input" name="cajon">
+                    </div>
+                `;
+            }
         });
     });
 
