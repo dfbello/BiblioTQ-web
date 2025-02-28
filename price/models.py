@@ -49,10 +49,9 @@ class Cotizacion2(models.Model):
     alto = models.DecimalField(max_digits=10, decimal_places=2)
     ancho   = models.DecimalField(max_digits=10, decimal_places=2)
     fondo   = models.DecimalField(max_digits=10, decimal_places=2)
-    altura_1 = models.DecimalField(max_digits=10, decimal_places=2)
-    altura_2 = models.DecimalField(max_digits=10, decimal_places=2)
-    N_repisas_p = models.IntegerField()
-    cajon = models.BooleanField(default=False)
+    alturarepisa = models.DecimalField(max_digits=10, decimal_places=2)
+    Nrepisas = models.IntegerField()
+    puerta = models.BooleanField(default=False)
     status = models.BooleanField(default=False) # False = pendiente, True = completado
 
 

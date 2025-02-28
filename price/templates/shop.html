@@ -77,7 +77,22 @@
                         <input type="number" class="form-control" name="n_cajones_izq" required>
                     </div>
                 `;
-            } else if (modelName === 'Cotizacion2' || modelName === 'Cotizacion3') {
+            } else if (modelName === 'Cotizacion2') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Altura de repisa en cm</label>
+                        <input type="number" class="form-control" name="alturarepisa" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de repisas</label>
+                        <input type="number" class="form-control" name="Nrepisas" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">¿Incluir puerta?</label>
+                        <input type="checkbox" class="form-check-input" name="puerta">
+                    </div>
+                `;
+            } else if (modelName === 'Cotizacion3') {
                 extraFields.innerHTML += `
                     <div class="mb-3">
                         <label class="form-label">Altura 1 en cm</label>

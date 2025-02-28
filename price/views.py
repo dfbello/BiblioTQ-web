@@ -43,7 +43,23 @@ def shop(request):
                 n_cajones_der=n_cajones_der,
                 n_cajones_izq=n_cajones_izq,
             )
-        elif selected_model['name'] in ['Cotizacion2', 'Cotizacion3']:
+        elif selected_model['name'] == 'Cotizacion2':
+            try:
+                alturarepisa = float(request.POST.get('alturarepisa'))
+                Nrepisas = int(request.POST.get('Nrepisas'))
+                puerta = request.POST.get('puerta') == 'on'
+            except (ValueError, TypeError):
+                return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
+
+            nueva_cotizacion = Cotizacion2(
+                alto=alto,
+                ancho=ancho,
+                fondo=profundidad,
+                alturarepisa=alturarepisa,
+                Nrepisas=Nrepisas,
+                puerta=puerta,
+            )
+        elif selected_model['name'] == 'Cotizacion3':
             try:
                 altura_1 = float(request.POST.get('altura_1'))
                 altura_2 = float(request.POST.get('altura_2'))
@@ -52,26 +68,15 @@ def shop(request):
             except (ValueError, TypeError):
                 return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
 
-            if selected_model['name'] == 'Cotizacion2':
-                nueva_cotizacion = Cotizacion2(
-                    alto=alto,
-                    ancho=ancho,
-                    fondo=profundidad,
-                    altura_1=altura_1,
-                    altura_2=altura_2,
-                    N_repisas_p=N_repisas_p,
-                    cajon=cajon,
-                )
-            else:
-                nueva_cotizacion = Cotizacion3(
-                    alto=alto,
-                    ancho=ancho,
-                    fondo=profundidad,
-                    altura_1=altura_1,
-                    altura_2=altura_2,
-                    N_repisas_p=N_repisas_p,
-                    cajon=cajon,
-                )
+            nueva_cotizacion = Cotizacion3(
+                alto=alto,
+                ancho=ancho,
+                fondo=profundidad,
+                altura_1=altura_1,
+                altura_2=altura_2,
+                N_repisas_p=N_repisas_p,
+                cajon=cajon,
+            )
 
         nueva_cotizacion.save()
         return redirect('success')
