@@ -34,43 +34,47 @@ class PedidoInventario(models.Model):
     ], default='pendiente')
 
 class Cotizacion1(models.Model):
+    usuario = models.ForeignKey('SimpleUsuario', on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     alto = models.DecimalField(max_digits=10, decimal_places=2)
-    ancho   = models.DecimalField(max_digits=10, decimal_places=2)
-    fondo   = models.DecimalField(max_digits=10, decimal_places=2)
+    ancho = models.DecimalField(max_digits=10, decimal_places=2)
+    fondo = models.DecimalField(max_digits=10, decimal_places=2)
     espesor = models.DecimalField(max_digits=10, decimal_places=2)
     n_cajones_der = models.IntegerField()
-    n_cajones_izq   = models.IntegerField()
-    status = models.BooleanField(default=False) # False = pendiente, True = completado
-
+    n_cajones_izq = models.IntegerField()
+    status = models.BooleanField(default=False)  # False = pendiente, True = completado
 
 class Cotizacion2(models.Model):
+    usuario = models.ForeignKey('SimpleUsuario', on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     alto = models.DecimalField(max_digits=10, decimal_places=2)
-    ancho   = models.DecimalField(max_digits=10, decimal_places=2)
-    fondo   = models.DecimalField(max_digits=10, decimal_places=2)
+    ancho = models.DecimalField(max_digits=10, decimal_places=2)
+    fondo = models.DecimalField(max_digits=10, decimal_places=2)
     alturarepisa = models.DecimalField(max_digits=10, decimal_places=2)
     Nrepisas = models.IntegerField()
     puerta = models.BooleanField(default=False)
-    status = models.BooleanField(default=False) # False = pendiente, True = completado
-
+    status = models.BooleanField(default=False)  # False = pendiente, True = completado
 
 class Cotizacion3(models.Model):
+    usuario = models.ForeignKey('SimpleUsuario', on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     alto = models.DecimalField(max_digits=10, decimal_places=2)
-    ancho   = models.DecimalField(max_digits=10, decimal_places=2)
-    fondo   = models.DecimalField(max_digits=10, decimal_places=2)
+    ancho = models.DecimalField(max_digits=10, decimal_places=2)
+    fondo = models.DecimalField(max_digits=10, decimal_places=2)
     altura_1 = models.DecimalField(max_digits=10, decimal_places=2)
     altura_2 = models.DecimalField(max_digits=10, decimal_places=2)
     N_repisas_p = models.IntegerField()
     cajon = models.BooleanField(default=False)
-    status = models.BooleanField(default=False) # False = pendiente, True = completado
+    status = models.BooleanField(default=False)  # False = pendiente, True = completado
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     telefono = models.CharField(max_length=20, null=True, blank=True)
     direccion = models.CharField(max_length=255, null=True, blank=True)
+
+class SimpleUsuario(models.Model):
+    email = models.EmailField(unique=True)
 
 class CorreoProveedor(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)

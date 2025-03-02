@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Cotizacion1, Cotizacion2, Cotizacion3
+from .models import Cotizacion1, Cotizacion2, Cotizacion3, SimpleUsuario
 
 # Define bookshelf models (Hardcoded since they won't be in the DB)
 BOOKSHELF_MODELS = [
@@ -7,11 +7,6 @@ BOOKSHELF_MODELS = [
     {"id": 2, "name": "Cotizacion2", "description": "A sleek glass bookshelf.", "image_url": "/static/images/Modelo2.png"},
     {"id": 3, "name": "Cotizacion3", "description": "A strong metal bookshelf.", "image_url": "/static/images/Modelo3.png"},
 ]
-
-
-def landing(request):
-    return render(request, 'landing.html')
-
 
 def shop(request):
     if request.method == 'POST':
@@ -21,6 +16,7 @@ def shop(request):
             ancho = float(request.POST.get('ancho'))
             alto = float(request.POST.get('alto'))
             profundidad = float(request.POST.get('profundidad'))
+            correo = request.POST.get('correo')
         except (ValueError, TypeError):
             return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
 
@@ -35,7 +31,9 @@ def shop(request):
             except (ValueError, TypeError):
                 return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
 
+            usuario, created = SimpleUsuario.objects.get_or_create(email=correo)
             nueva_cotizacion = Cotizacion1(
+                usuario=usuario,
                 alto=alto,
                 ancho=ancho,
                 fondo=profundidad,
@@ -50,8 +48,9 @@ def shop(request):
                 puerta = request.POST.get('puerta') == 'on'
             except (ValueError, TypeError):
                 return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
-
+            usuario, created = SimpleUsuario.objects.get_or_create(email=correo)
             nueva_cotizacion = Cotizacion2(
+                usuario=usuario,
                 alto=alto,
                 ancho=ancho,
                 fondo=profundidad,
@@ -59,6 +58,7 @@ def shop(request):
                 Nrepisas=Nrepisas,
                 puerta=puerta,
             )
+            
         elif selected_model['name'] == 'Cotizacion3':
             try:
                 altura_1 = float(request.POST.get('altura_1'))
@@ -67,8 +67,9 @@ def shop(request):
                 cajon = request.POST.get('cajon') == 'on'
             except (ValueError, TypeError):
                 return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Valores inválidos'})
-
+            usuario, created = SimpleUsuario.objects.get_or_create(email=correo)
             nueva_cotizacion = Cotizacion3(
+                usuario=usuario,
                 alto=alto,
                 ancho=ancho,
                 fondo=profundidad,
@@ -83,6 +84,8 @@ def shop(request):
 
     return render(request, 'shop.html', {'models': BOOKSHELF_MODELS})
 
+def landing(request):
+    return render(request, 'landing.html')
 
 def success(request):
     return render(request, 'success.html')
