@@ -37,7 +37,6 @@ def shop(request):
                 alto=alto,
                 ancho=ancho,
                 fondo=profundidad,
-                espesor=espesor,
                 n_cajones_der=n_cajones_der,
                 n_cajones_izq=n_cajones_izq,
             )

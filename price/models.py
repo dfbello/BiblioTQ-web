@@ -1,45 +1,11 @@
 from django.db import models
 
-# Create your models here.
-class Usuario(models.Model):
-    nombre = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=255)
-
-class Peticion(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    fecha = models.DateTimeField(auto_now_add=True)
-    descripcion = models.TextField()
-    estado = models.CharField(max_length=20, choices=[
-        ('pendiente', 'Pendiente'),
-        ('en_proceso', 'En Proceso'),
-        ('completada', 'Completada'),
-        ('cancelada', 'Cancelada')
-    ], default='pendiente')
-
-class Inventario(models.Model):
-    nombre_mueble = models.CharField(max_length=100)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.IntegerField()
-    descripcion = models.TextField()
-
-class PedidoInventario(models.Model):
-    mueble = models.ForeignKey(Inventario, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
-    fecha_pedido = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=20, choices=[
-        ('pendiente', 'Pendiente'),
-        ('completado', 'Completado'),
-        ('cancelado', 'Cancelado')
-    ], default='pendiente')
-
 class Cotizacion1(models.Model):
     usuario = models.ForeignKey('SimpleUsuario', on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     alto = models.DecimalField(max_digits=10, decimal_places=2)
     ancho = models.DecimalField(max_digits=10, decimal_places=2)
     fondo = models.DecimalField(max_digits=10, decimal_places=2)
-    espesor = models.DecimalField(max_digits=10, decimal_places=2)
     n_cajones_der = models.IntegerField()
     n_cajones_izq = models.IntegerField()
     status = models.BooleanField(default=False)  # False = pendiente, True = completado
@@ -67,17 +33,14 @@ class Cotizacion3(models.Model):
     cajon = models.BooleanField(default=False)
     status = models.BooleanField(default=False)  # False = pendiente, True = completado
 
-class Proveedor(models.Model):
+class insumo(models.Model):
+    model = models.CharField(max_length=100)
+    clase = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    telefono = models.CharField(max_length=20, null=True, blank=True)
-    direccion = models.CharField(max_length=255, null=True, blank=True)
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+
 
 class SimpleUsuario(models.Model):
     email = models.EmailField(unique=True)
 
-class CorreoProveedor(models.Model):
-    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
-    asunto = models.CharField(max_length=255)
-    mensaje = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
