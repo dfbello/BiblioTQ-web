@@ -1,7 +1,8 @@
 {% extends 'home.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container text-center mt-5">
+    <img src="{% static 'images/logo-navbar.png' %}" alt="TeCAD Logo" class="mb-4" style="height: 250px;">
     <h1 class="display-4">Cotiza la biblioteca de tus sueños.</h1>
     <p class="lead">Tus muebles, tus dimensiones.</p>
     <a href="{% url 'shop' %}" class="btn btn-primary btn-lg">Cotiza ahora</a>

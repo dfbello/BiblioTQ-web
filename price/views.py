@@ -3,9 +3,9 @@ from .models import Cotizacion1, Cotizacion2, Cotizacion3, SimpleUsuario
 
 # Define bookshelf models (Hardcoded since they won't be in the DB)
 BOOKSHELF_MODELS = [
-    {"id": 1, "name": "Cotizacion1", "description": "A sturdy oak bookshelf.", "image_url": "/static/images/Modelo1.jpg"},
-    {"id": 2, "name": "Cotizacion2", "description": "A sleek glass bookshelf.", "image_url": "/static/images/Modelo2.png"},
-    {"id": 3, "name": "Cotizacion3", "description": "A strong metal bookshelf.", "image_url": "/static/images/Modelo3.png"},
+    {"id": 1, "name": "Modelo 1", "description": "Con dos secciones laterales y repisas ajustables.", "image_url": "/static/images/Modelo1.png"},
+    {"id": 2, "name": "Modelo 2", "description": "Vertical con repisas y altura personalizable de la primera repisa.", "image_url": "/static/images/Modelo2.png"},
+    {"id": 3, "name": "Modelo 3", "description": "Con repisas pequeñas y una repisa inferior con cajón integrado.", "image_url": "/static/images/Modelo3.jpeg"},
 ]
 
 def shop(request):
@@ -23,7 +23,7 @@ def shop(request):
         if not selected_model:
             return render(request, 'shop.html', {'models': BOOKSHELF_MODELS, 'error': 'Seleccione un modelo válido'})
 
-        if selected_model['name'] == 'Cotizacion1':
+        if selected_model['name'] == 'Modelo 1':
             try:
                 espesor = float(request.POST.get('espesor'))
                 n_cajones_der = int(request.POST.get('n_cajones_der'))
@@ -41,7 +41,7 @@ def shop(request):
                 n_cajones_der=n_cajones_der,
                 n_cajones_izq=n_cajones_izq,
             )
-        elif selected_model['name'] == 'Cotizacion2':
+        elif selected_model['name'] == 'Modelo 2':
             try:
                 alturarepisa = float(request.POST.get('alturarepisa'))
                 Nrepisas = int(request.POST.get('Nrepisas'))
@@ -59,7 +59,7 @@ def shop(request):
                 puerta=puerta,
             )
             
-        elif selected_model['name'] == 'Cotizacion3':
+        elif selected_model['name'] == 'Modelo 3':
             try:
                 altura_1 = float(request.POST.get('altura_1'))
                 altura_2 = float(request.POST.get('altura_2'))
