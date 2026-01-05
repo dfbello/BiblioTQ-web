@@ -1,0 +1,67 @@
+:root {
+    --bs-primary: #804000 !important;
+    --form-bg: #804000; /* Nuevo color de fondo para los formularios */
+    --input-bg: #804000; /* Nuevo color de fondo para los campos de texto */
+    --input-border: #dbbe91fd; /* Color del borde de los campos de texto */
+    --input-focus-shadow: rgba(158, 104, 24, 0.7); /* Color del resplandor al enfocar */
+}
+
+.btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+.border-primary {
+    border-color: var(--bs-primary) !important;
+}
+
+.navbar {
+    background-color: var(--bs-primary) !important;
+}
+
+#order-form {
+    background-color: var(--form-bg) !important; /* Aplicar el nuevo color de fondo a los formularios */
+    color: #ffffff; /* Asegurar que el texto sea legible */
+}
+
+.navbar-logo {
+    height: 60px; /* Set desired logo height */
+    position: absolute;
+    top: 50%; /* Center it vertically */
+    transform: translateY(-50%); /* Adjust for exact centering */
+    margin-right: 10px; /* Add some space between the logo and the brand name */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+textarea {
+    background-color: var(--input-bg) !important; /* Use the same bg color as forms */
+    color: #ffffff !important; /* White text for contrast */
+    border: 1px solid var(--input-border) !important; /* Use defined border color */
+    padding: 8px;
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+/* Change the placeholder text color */
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important; /* Lightened white for contrast */
+}
+
+/* Change text color and add effect when typing */
+input:focus,
+textarea:focus {
+    background-color: var(--input-bg) !important;
+    color: #ffffff !important;
+    border-color: var(--input-border) !important;
+    box-shadow: 0 0 5px var(--input-focus-shadow) !important;
+    outline: none !important;
+}
+
+
+body {
+    background-color: #ffffff;
+    color: #3a2a1a; 
+}
+

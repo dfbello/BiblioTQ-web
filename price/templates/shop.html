@@ -1,0 +1,162 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Nuestros Modelos</h2>
+
+    <!-- Check for errors -->
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Bookshelf Models -->
+    <div class="row">
+        {% for model in models %}
+        <div class="col-md-4">
+            <div class="card border-primary mb-5">
+                <img src="{{ model.image_url }}" class="card-img-top" alt="{{ model.name }}">   
+                <div class="card-body">
+                    <h5 class="card-title">{{ model.name }}</h5>
+                    <p class="card-text">{{ model.description }}</p>
+                    <button class="btn btn-primary select-btn" data-model-id="{{ model.id }}" data-model-name="{{ model.name }}" onclick="selectModel()">
+                        Customizar
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Hidden Order Form -->
+<div id="order-form" class="mt-5 p-4 bg-light border border-primary rounded d-none mb-5">
+    <h3>Define las dimensiones para tu <span id="selected-model-name"></span></h3>
+    
+    <div class="row">
+        <!-- Left Column: Form Fields -->
+        <div class="col-md-6">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="model_id" id="model-id">
+                
+                <div class="mb-3">
+                    <label class="form-label">Ancho en cm</label>
+                    <input type="number" class="form-control" name="ancho" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Alto en cm</label>
+                    <input type="number" class="form-control" name="alto" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Profundidad en cm</label>
+                    <input type="number" class="form-control" name="profundidad" required>
+                </div>
+
+                <!-- Extra fields for specific models -->
+                <div class="mb-3" id="extra-fields"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese su correo a donde le llegará la cotización</label>
+                    <input type="email" class="form-control" name="correo" required>
+                </div>
+
+                <button type="submit" class="btn btn-light">Enviar solicitud</button>
+            </form>
+        </div>
+
+        <!-- Right Column: Image -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img id="model-image" src="" class="img-fluid d-none" alt="Modelo de librero">
+        </div>
+    </div>
+</div>
+
+
+<script>    
+    document.querySelectorAll('.select-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const modelName = this.getAttribute('data-model-name');
+            document.getElementById('selected-model-name').textContent = modelName;
+            document.getElementById('model-id').value = this.getAttribute('data-model-id');
+            document.getElementById('order-form').classList.remove('d-none');
+
+            const extraFields = document.getElementById('extra-fields');
+            extraFields.innerHTML = '';
+
+            // Image Handling
+            const modelImage = document.getElementById('model-image');
+            let imagePath = "";
+
+            if (modelName === 'Modelo 1') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Número de divisiones a la derecha</label>
+                        <input type="number" class="form-control" name="n_cajones_der" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de divisiones a la izquierda</label>
+                        <input type="number" class="form-control" name="n_cajones_izq" required>
+                    </div>
+                `;
+                imagePath = "{% static 'images/Modelo1-medidas.jpeg' %}";  // Change to the actual image path
+            } 
+            else if (modelName === 'Modelo 2') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Altura de repisa en cm</label>
+                        <input type="number" class="form-control" name="alturarepisa" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de repisas</label>
+                        <input type="number" class="form-control" name="Nrepisas" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">¿Incluir puerta?</label>
+                        <input type="checkbox" class="form-check-input" name="puerta">
+                    </div>
+                `;
+                imagePath = "{% static 'images/Modelo2-medidas.jpeg' %}";  // Change to the actual image path
+            } 
+            else if (modelName === 'Modelo 3') {
+                extraFields.innerHTML += `
+                    <div class="mb-3">
+                        <label class="form-label">Altura 1 en cm</label>
+                        <input type="number" class="form-control" name="altura_1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Altura 2 en cm</label>
+                        <input type="number" class="form-control" name="altura_2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Número de repisas</label>
+                        <input type="number" class="form-control" name="N_repisas_p" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">¿Incluir cajón?</label>
+                        <input type="checkbox" class="form-check-input" name="cajon">
+                    </div>
+                `;
+                imagePath = "{% static 'images/Modelo3-medidas.jpeg' %}";  // Change to the actual image path
+            }
+
+            // Update Image Source
+            if (imagePath) {
+                modelImage.src = imagePath;
+                modelImage.classList.remove('d-none');
+            } else {
+                modelImage.classList.add('d-none');
+            }
+        });
+    });
+
+
+
+    function selectModel() {
+        // Scroll smoothly to the form
+
+        // Small delay before scrolling to ensure UI updates first
+        setTimeout(() => {
+            document.getElementById("order-form").scrollIntoView({ behavior: "smooth" });
+        }, 100); // Adjust delay if needed
+    }
+</script>
+{% endblock %}
